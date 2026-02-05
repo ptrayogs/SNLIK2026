@@ -111,10 +111,9 @@ def proses_rekap_anomali(list_uploaded_csv, deskripsi_filepath):
 # --- ANTARMUKA APLIKASI STREAMLIT ---
 # --------------------------------------------------------------------------
 
-st.set_page_config(page_title="Anomali Sakernas - Integrated", layout="centered")
+st.set_page_config(page_title="Anomali SNLIK 2026", layout="centered")
 
-st.title("🛡️ Anomali Sakernas Terintegrasi")
-st.markdown("**Gabungan Blok Demografi, Perbankan, Pasar Modal, dll.**")
+st.title("🛡️ Anomali SNLIK 2026")
 st.info("Created by Tim IPDS 1809 - YCP")
 st.divider()
 
