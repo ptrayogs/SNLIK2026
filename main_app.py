@@ -134,7 +134,7 @@ st.subheader("Langkah 1: Hitung Total ART")
 st.markdown("Jalankan query ini di SQL Lab untuk mendapatkan jumlah total baris data (ART).")
 query_total_art = """
 SELECT COUNT(*) AS "Jumlah ART"
-FROM tyo_93d2145f.art_roster art;
+FROM tyo_93d2145f.nested_art;
 """
 st.code(query_total_art, language='sql')
 
