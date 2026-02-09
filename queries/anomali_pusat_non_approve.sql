@@ -25,6 +25,8 @@ FROM (
             -- INFORMASI PETUGAS
             usr.PPL AS PPL,
             usr.PML AS PML,
+            -- STATUS DOKUMEN (Opsional, agar tahu statusnya apa)
+            base.assignment_status_alias AS STATUS_DOKUMEN,
 
             -- ANOMALI 1-8 (BLOK DEMOGRAFI)
             CASE WHEN (art.r407 < 17 AND root.r412_value = '02') THEN 1 ELSE 0 END AS A1,
@@ -60,7 +62,7 @@ FROM (
             -- ANOMALI 24-26 (BLOK PERASURANSIAN)
             CASE WHEN (root.r804a_value = 1 AND root.r806ai_value = 5 AND root.r806aii_value = 5 AND root.r806aiii_value = 5 AND root.r806aiv_value = 5 AND root.r806av_value = 5 AND root.r806avi_value = 5) THEN 1 ELSE 0 END AS A24,
             CASE WHEN (root.r804b_value = 1 AND root.r806bi_value = 5 AND root.r806bii_value = 5 AND root.r806biii_value = 5 AND root.r806biv_value = 5 AND root.r806bv_value = 5 AND root.r806bvi_value = 5) THEN 1 ELSE 0 END AS A25,
-            CASE WHEN ((root.r804a_value = 1 OR root.r804b_value = 1) AND root.r807a_value = 5 AND root.r607b_value = 5 AND root.r807c_value = 5 AND root.r807d_value = 5 AND root.r807e_value = 5) THEN 1 ELSE 0 END AS A26,
+            CASE WHEN ((root.r804a_value = 1 OR root.r804b_value = 1) AND root.r807a_value = 5 AND root.r807c_value = 5 AND root.r807d_value = 5 AND root.r807e_value = 5) THEN 1 ELSE 0 END AS A26,
 
             -- ANOMALI 27-30 (BLOK LEMBAGA PEMBIAYAAN)
             CASE WHEN (art.r407 < 17 AND (root.r904a_value = 1 OR root.r904b_value = 1)) THEN 1 ELSE 0 END AS A27,
@@ -168,8 +170,8 @@ FROM (
         -- Join Status Assignment
         LEFT JOIN tyo_93d2145f.base_table_assignment base ON base.id = root.assignment_id
 
+        -- FILTER: Hanya yang Aktif dan Bersedia (Status apapun: Approved, Completed, Submitted, etc)
         WHERE base.is_active = 1 
           AND root.bersedia_value != 3 
-          AND (base.assignment_status_alias = 'APPROVED BY Pengawas' OR base.assignment_status_alias = 'COMPLETED BY Pengawas')
     ) AS subquery
 ) AS subquery2

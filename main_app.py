@@ -5,8 +5,9 @@ import os
 import datetime
 
 # --- PENGATURAN PATH FILE SQL ---
-# Pastikan file SQL gabungan yang saya buatkan sebelumnya disimpan di path ini
-SQL_FILE_PATH = "queries/anomali_pusat.sql" 
+# Pastikan kedua file ini ada di folder queries/
+SQL_APPROVED_PATH = "queries/anomali_pusat.sql" 
+SQL_NON_APPROVED_PATH = "queries/anomali_pusat_non_approve.sql"
 DESKRIPSI_PATH = "Deskripsi.xlsx"
 
 # --------------------------------------------------------------------------
@@ -25,9 +26,12 @@ def load_sql_template(filepath):
         st.error(f"❌ Gagal membaca file SQL {filepath}: {e}")
         return None
 
-def generate_sql_queries(total_art, chunk_size=1000):
-    """Fungsi untuk memecah query menjadi beberapa bagian berdasarkan baris."""
-    base_sql_template = load_sql_template(SQL_FILE_PATH)
+def generate_sql_queries(total_art, sql_filepath, chunk_size=1000):
+    """
+    Fungsi untuk memecah query menjadi beberapa bagian berdasarkan baris.
+    Updated: Sekarang menerima parameter sql_filepath agar dinamis.
+    """
+    base_sql_template = load_sql_template(sql_filepath)
     if base_sql_template is None:
         return []
         
@@ -147,23 +151,43 @@ st.divider()
 
 # --- LANGKAH 2: GENERATE QUERY ---
 st.subheader("Langkah 2: Generate Query")
-st.markdown("Sistem akan memecah query besar menjadi beberapa bagian agar tidak timeout saat dijalankan di SQL Lab.")
+st.markdown("Pilih jenis query yang ingin dihasilkan. Sistem akan memecah query menjadi beberapa bagian.")
 
-if st.button('🚀 Generate SQL Query', use_container_width=True, type="primary"):
-    if total_art_input:
-        queries = generate_sql_queries(int(total_art_input))
-        if queries:
-            st.success(f"Berhasil membuat **{len(queries)}** bagian query.")
-            st.info("Silakan copy satu per satu query di bawah ini dan jalankan di SQL Lab. Simpan hasilnya dalam format CSV.")
-            
-            with st.container(height=400):
-                for i, query in enumerate(queries, 1):
-                    with st.expander(f"📄 Query Bagian {i} (Klik untuk buka)"):
-                        st.code(query, language='sql')
+col_approved, col_non_approved = st.columns(2)
+
+# Tombol 1: Approved Only
+with col_approved:
+    if st.button('✅ Generate SQL (Approved)', use_container_width=True, type="primary"):
+        if total_art_input:
+            queries = generate_sql_queries(int(total_art_input), SQL_APPROVED_PATH)
+            if queries:
+                st.success(f"Berhasil: {len(queries)} Query (Approved)")
+                st.info("Status: APPROVED BY Pengawas / COMPLETED BY Pengawas")
+                with st.container(height=300):
+                    for i, query in enumerate(queries, 1):
+                        with st.expander(f"📄 Query Approved Bagian {i}"):
+                            st.code(query, language='sql')
+            else:
+                st.error(f"Gagal. Cek file: {SQL_APPROVED_PATH}")
         else:
-            st.error("Gagal membuat query. Periksa apakah file 'queries/anomali_pusat.sql' sudah ada.")
-    else:
-        st.warning("Masukkan jumlah ART terlebih dahulu di Langkah 1.")
+            st.warning("Masukkan jumlah ART dulu.")
+
+# Tombol 2: Non-Approved / All Status
+with col_non_approved:
+    if st.button('⚠️ Generate SQL (Non-Approved)', use_container_width=True):
+        if total_art_input:
+            queries = generate_sql_queries(int(total_art_input), SQL_NON_APPROVED_PATH)
+            if queries:
+                st.success(f"Berhasil: {len(queries)} Query (Non-Approved)")
+                st.info("Status: SEMUA (Active) termasuk Submitted/Rejected")
+                with st.container(height=300):
+                    for i, query in enumerate(queries, 1):
+                        with st.expander(f"📄 Query Non-Approve Bagian {i}"):
+                            st.code(query, language='sql')
+            else:
+                st.error(f"Gagal. Cek file: {SQL_NON_APPROVED_PATH}")
+        else:
+            st.warning("Masukkan jumlah ART dulu.")
 
 st.divider()
 
