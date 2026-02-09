@@ -87,8 +87,9 @@ SELECT  rekap.assignment_id
                     AND (root.r412_value = '03' OR root.r412_value = '04' OR root.r412_value = '06' OR root.r412_value = '08')
                     AND pair_d.pair_value = 'D'),1,0) AS anomali_08
                     
-               ,IIF(ppl.fullname = 'null' OR ppl.fullname IS NULL OR LTRIM(RTRIM(ppl.fullname)) = '', ppl.email, ppl.fullname)  AS [PPL]
-               ,IIF(pml.fullname = 'null' OR pml.fullname IS NULL OR LTRIM(RTRIM(pml.fullname)) = '', pml.email, pml.fullname)  AS [PML]
+               ,usr.PPL
+               ,usr.PML
+               
                ,DATEADD(HOUR,7,base.date_modified) AS date
                ,CONCAT('<a href = "https://fasih-sm.bps.go.id/survey-collection/assignment-detail/',
                           root.assignment_id,
@@ -128,14 +129,9 @@ SELECT  rekap.assignment_id
             LEFT JOIN tyo_93d2145f.pair_label_value_0 pair_d
                   ON root.assignment_id = pair_d.assignment_id AND pair_d.data_key = 'r414' AND pair_d.pair_value = 'D'
                   
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_ppl
-                  ON root.assignment_id = r_ppl.assignment_id AND r_ppl.current_survey_rolename = 'Pencacah'
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_pml
-                  ON root.assignment_id = r_pml.assignment_id AND r_pml.current_survey_rolename = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user pml
-                  ON pml.user_id = r_pml.current_user_id AND pml.role_description = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user ppl
-                  ON ppl.user_id = r_ppl.current_user_id AND ppl.role_description = 'Pencacah'
+            LEFT JOIN tyo_93d2145f.petugas usr
+                  ON root.assignment_id = usr.assignment_id
+                  
             LEFT JOIN tyo_93d2145f.base_table_assignment base
                   ON base.id = root.assignment_id
   
@@ -157,6 +153,8 @@ WHERE rekap.anomali_01 = 1
       OR rekap.anomali_07 = 1
       OR rekap.anomali_08 = 1
       
+
+
 /* Anomali 9-15 Blok Perbankan
   Link list anomali: http://s.bps.go.id/List-Anomali-SNLIK2026
 */
@@ -241,8 +239,9 @@ SELECT  rekap.assignment_id
                ,IIF((anomali_15.anomali_arr IS NULL AND (root.r503b_value = 1 AND root.r504b_value = 1) AND root.r507a_value = 5 
                     AND root.r507b_value = 5 AND root.r507c_value = 5 AND root.r507d_value = 5 AND root.r507e_value = 5),1,0) AS anomali_15
                     
-               ,IIF(ppl.fullname = 'null' OR ppl.fullname IS NULL OR LTRIM(RTRIM(ppl.fullname)) = '', ppl.email, ppl.fullname)  AS [PPL]
-               ,IIF(pml.fullname = 'null' OR pml.fullname IS NULL OR LTRIM(RTRIM(pml.fullname)) = '', pml.email, pml.fullname)  AS [PML]
+               ,usr.PPL
+               ,usr.PML
+               
                ,DATEADD(HOUR,7,base.date_modified) AS date
                ,CONCAT('<a href = "https://fasih-sm.bps.go.id/survey-collection/assignment-detail/',
                           root.assignment_id,
@@ -274,14 +273,9 @@ SELECT  rekap.assignment_id
             LEFT JOIN tyo_93d2145f.pair_label_value_0 pair_a
                   ON root.assignment_id = pair_a.assignment_id AND pair_a.data_key = 'r414' AND pair_a.pair_value = 'A'
             
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_ppl
-                  ON root.assignment_id = r_ppl.assignment_id AND r_ppl.current_survey_rolename = 'Pencacah'
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_pml
-                  ON root.assignment_id = r_pml.assignment_id AND r_pml.current_survey_rolename = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user pml
-                  ON pml.user_id = r_pml.current_user_id AND pml.role_description = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user ppl
-                  ON ppl.user_id = r_ppl.current_user_id AND ppl.role_description = 'Pencacah'
+            LEFT JOIN tyo_93d2145f.petugas usr
+                  ON root.assignment_id = usr.assignment_id
+                  
             LEFT JOIN tyo_93d2145f.base_table_assignment base
                   ON base.id = root.assignment_id
   
@@ -380,8 +374,9 @@ SELECT  rekap.assignment_id
                     AND root.r607c_value = 5),1,0) AS anomali_19
                     
                     
-               ,IIF(ppl.fullname = 'null' OR ppl.fullname IS NULL OR LTRIM(RTRIM(ppl.fullname)) = '', ppl.email, ppl.fullname)  AS [PPL]
-               ,IIF(pml.fullname = 'null' OR pml.fullname IS NULL OR LTRIM(RTRIM(pml.fullname)) = '', pml.email, pml.fullname)  AS [PML]
+               ,usr.PPL
+               ,usr.PML
+               
                ,DATEADD(HOUR,7,base.date_modified) AS date
                ,CONCAT('<a href = "https://fasih-sm.bps.go.id/survey-collection/assignment-detail/',
                           root.assignment_id,
@@ -405,14 +400,9 @@ SELECT  rekap.assignment_id
                   ON root.assignment_id = anomali_19.assignment_id AND anomali_19.anomali_arr = '19'
             
                   
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_ppl
-                  ON root.assignment_id = r_ppl.assignment_id AND r_ppl.current_survey_rolename = 'Pencacah'
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_pml
-                  ON root.assignment_id = r_pml.assignment_id AND r_pml.current_survey_rolename = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user pml
-                  ON pml.user_id = r_pml.current_user_id AND pml.role_description = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user ppl
-                  ON ppl.user_id = r_ppl.current_user_id AND ppl.role_description = 'Pencacah'
+            LEFT JOIN tyo_93d2145f.petugas usr
+                  ON root.assignment_id = usr.assignment_id
+                  
             LEFT JOIN tyo_93d2145f.base_table_assignment base
                   ON base.id = root.assignment_id
   
@@ -503,9 +493,9 @@ SELECT  rekap.assignment_id
                     AND root.r704_value = 1  AND root.r707a_value = 5 AND root.r707b_value = 5 AND root.r707c_value = 5 
                     AND root.r707d_value = 5 AND root.r707e_value = 5),1,0) AS anomali_23
                        
-                    
-               ,IIF(ppl.fullname = 'null' OR ppl.fullname IS NULL OR LTRIM(RTRIM(ppl.fullname)) = '', ppl.email, ppl.fullname)  AS [PPL]
-               ,IIF(pml.fullname = 'null' OR pml.fullname IS NULL OR LTRIM(RTRIM(pml.fullname)) = '', pml.email, pml.fullname)  AS [PML]
+               ,usr.PPL
+               ,usr.PML
+               
                ,DATEADD(HOUR,7,base.date_modified) AS date
                ,CONCAT('<a href = "https://fasih-sm.bps.go.id/survey-collection/assignment-detail/',
                           root.assignment_id,
@@ -529,14 +519,9 @@ SELECT  rekap.assignment_id
             LEFT JOIN tyo_93d2145f.pair_label_value_0 pair_b
                   ON root.assignment_id = pair_b.assignment_id AND pair_b.data_key = 'r414' AND pair_b.pair_value = 'B'
                   
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_ppl
-                  ON root.assignment_id = r_ppl.assignment_id AND r_ppl.current_survey_rolename = 'Pencacah'
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_pml
-                  ON root.assignment_id = r_pml.assignment_id AND r_pml.current_survey_rolename = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user pml
-                  ON pml.user_id = r_pml.current_user_id AND pml.role_description = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user ppl
-                  ON ppl.user_id = r_ppl.current_user_id AND ppl.role_description = 'Pencacah'
+            LEFT JOIN tyo_93d2145f.petugas usr
+                  ON root.assignment_id = usr.assignment_id
+
             LEFT JOIN tyo_93d2145f.base_table_assignment base
                   ON base.id = root.assignment_id
   
@@ -626,8 +611,9 @@ SELECT  rekap.assignment_id
                     AND (root.r804a_value = 1 OR root.r804b_value = 1 ) AND root.r807a_value = 5 AND root.r607b_value = 5 
                     AND root.r807c_value = 5 AND root.r807d_value = 5 AND root.r807e_value = 5),1,0) AS anomali_26
                     
-               ,IIF(ppl.fullname = 'null' OR ppl.fullname IS NULL OR LTRIM(RTRIM(ppl.fullname)) = '', ppl.email, ppl.fullname)  AS [PPL]
-               ,IIF(pml.fullname = 'null' OR pml.fullname IS NULL OR LTRIM(RTRIM(pml.fullname)) = '', pml.email, pml.fullname)  AS [PML]
+               ,usr.PPL
+               ,usr.PML
+               
                ,DATEADD(HOUR,7,base.date_modified) AS date
                ,CONCAT('<a href = "https://fasih-sm.bps.go.id/survey-collection/assignment-detail/',
                           root.assignment_id,
@@ -646,14 +632,9 @@ SELECT  rekap.assignment_id
             LEFT JOIN tyo_93d2145f.root_table_2 anomali_26
                   ON root.assignment_id = anomali_26.assignment_id AND anomali_26.anomali_arr = '26'
                   
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_ppl
-                  ON root.assignment_id = r_ppl.assignment_id AND r_ppl.current_survey_rolename = 'Pencacah'
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_pml
-                  ON root.assignment_id = r_pml.assignment_id AND r_pml.current_survey_rolename = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user pml
-                  ON pml.user_id = r_pml.current_user_id AND pml.role_description = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user ppl
-                  ON ppl.user_id = r_ppl.current_user_id AND ppl.role_description = 'Pencacah'
+            LEFT JOIN tyo_93d2145f.petugas usr
+                  ON root.assignment_id = usr.assignment_id
+                  
             LEFT JOIN tyo_93d2145f.base_table_assignment base
                   ON base.id = root.assignment_id
   
@@ -743,8 +724,9 @@ SELECT  rekap.assignment_id
                     AND (root.r904a_value = 1 OR root.r904b_value = 1 ) AND root.r907a_value = 5 AND root.r907b_value = 5 
                     AND root.r907c_value = 5 AND root.r907d_value = 5 AND root.r907e_value = 5),1,0) AS anomali_30
                     
-               ,IIF(ppl.fullname = 'null' OR ppl.fullname IS NULL OR LTRIM(RTRIM(ppl.fullname)) = '', ppl.email, ppl.fullname)  AS [PPL]
-               ,IIF(pml.fullname = 'null' OR pml.fullname IS NULL OR LTRIM(RTRIM(pml.fullname)) = '', pml.email, pml.fullname)  AS [PML]
+               ,usr.PPL
+               ,usr.PML
+              
                ,DATEADD(HOUR,7,base.date_modified) AS date
                ,CONCAT('<a href = "https://fasih-sm.bps.go.id/survey-collection/assignment-detail/',
                           root.assignment_id,
@@ -767,14 +749,9 @@ SELECT  rekap.assignment_id
             LEFT JOIN tyo_93d2145f.root_table_2 anomali_30
                   ON root.assignment_id = anomali_30.assignment_id AND anomali_30.anomali_arr = '30'
                   
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_ppl
-                  ON root.assignment_id = r_ppl.assignment_id AND r_ppl.current_survey_rolename = 'Pencacah'
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_pml
-                  ON root.assignment_id = r_pml.assignment_id AND r_pml.current_survey_rolename = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user pml
-                  ON pml.user_id = r_pml.current_user_id AND pml.role_description = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user ppl
-                  ON ppl.user_id = r_ppl.current_user_id AND ppl.role_description = 'Pencacah'
+            LEFT JOIN tyo_93d2145f.petugas usr
+                  ON root.assignment_id = usr.assignment_id
+                  
             LEFT JOIN tyo_93d2145f.base_table_assignment base
                   ON base.id = root.assignment_id
   
@@ -866,8 +843,9 @@ SELECT  rekap.assignment_id
                     AND (root.r1004a_value = 1 OR root.r1004b_value = 1 ) AND root.r1007a_value = 5 AND root.r1007b_value = 5 
                     AND root.r1007c_value = 5 AND root.r1007d_value = 5 ),1,0) AS anomali_34
                     
-               ,IIF(ppl.fullname = 'null' OR ppl.fullname IS NULL OR LTRIM(RTRIM(ppl.fullname)) = '', ppl.email, ppl.fullname)  AS [PPL]
-               ,IIF(pml.fullname = 'null' OR pml.fullname IS NULL OR LTRIM(RTRIM(pml.fullname)) = '', pml.email, pml.fullname)  AS [PML]
+               ,usr.PPL
+               ,usr.PML
+               
                ,DATEADD(HOUR,7,base.date_modified) AS date
                ,CONCAT('<a href = "https://fasih-sm.bps.go.id/survey-collection/assignment-detail/',
                           root.assignment_id,
@@ -890,14 +868,9 @@ SELECT  rekap.assignment_id
             LEFT JOIN tyo_93d2145f.root_table_2 anomali_34
                   ON root.assignment_id = anomali_34.assignment_id AND anomali_34.anomali_arr = '34'
                   
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_ppl
-                  ON root.assignment_id = r_ppl.assignment_id AND r_ppl.current_survey_rolename = 'Pencacah'
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_pml
-                  ON root.assignment_id = r_pml.assignment_id AND r_pml.current_survey_rolename = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user pml
-                  ON pml.user_id = r_pml.current_user_id AND pml.role_description = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user ppl
-                  ON ppl.user_id = r_ppl.current_user_id AND ppl.role_description = 'Pencacah'
+            LEFT JOIN tyo_93d2145f.petugas usr
+                  ON root.assignment_id = usr.assignment_id
+                  
             LEFT JOIN tyo_93d2145f.base_table_assignment base
                   ON base.id = root.assignment_id
   
@@ -910,6 +883,125 @@ WHERE rekap.anomali_31 = 1
       OR rekap.anomali_32 = 1 
       OR rekap.anomali_33 = 1 
       OR rekap.anomali_34 = 1 
+      
+/* Anomali 35-38 Blok Pergadaian
+  Link list anomali: http://s.bps.go.id/List-Anomali-SNLIK2026
+*/
+
+SELECT  rekap.assignment_id
+        ,rekap.level_1_full_code  AS [Kode Prov]
+        ,rekap.level_1_name       AS [Provinsi]
+        ,rekap.level_2_full_code  AS [Kode Kab/Kota]
+        ,rekap.level_2_name       AS [Kab/Kota]
+        ,rekap.level_3_full_code  AS [Kode Kecamatan]
+        ,rekap.level_3_name       AS [Kecamatan]
+        ,rekap.level_4_full_code  AS [Kode Desa]
+        ,rekap.level_4_name       AS [Desa]
+        ,rekap.level_6_full_code  AS [Kode SLS]
+        ,rekap.nks_baru           AS [NKS]
+        ,rekap.nu_sampel          AS [NUS]
+        ,rekap.bersedia_value
+        ,rekap.bersedia_label
+        ,rekap.r110               AS [KRT]
+        ,rekap.responden_terpilih
+        ,rekap.PPL
+        ,rekap.PML
+        ,rekap.date AS [Date Modified]
+        
+        ,LTRIM(
+            STUFF(
+              CONCAT(
+                      CASE WHEN rekap.anomali_35 = 1 THEN ',35' ELSE '' END,
+                      CASE WHEN rekap.anomali_36 = 1 THEN ',36' ELSE '' END,
+                      CASE WHEN rekap.anomali_37 = 1 THEN ',37' ELSE '' END,
+                      CASE WHEN rekap.anomali_38 = 1 THEN ',38' ELSE '' END
+                    ),
+              1, 1, ''
+            )
+        ) AS rekap_anomali
+        
+        ,rekap.[Link]
+        ,rekap.catatan
+        ,rekap.is_active
+        ,rekap.survey_period_id
+        
+        ,rekap.level_1_full_code  
+        ,rekap.level_2_full_code
+        ,rekap.level_3_full_code 
+        ,rekap.level_4_full_code 
+        ,rekap.level_6_full_code 
+        ,rekap.anomali_35,rekap.anomali_36,rekap.anomali_37,rekap.anomali_38
+               
+
+    FROM (SELECT  root.assignment_id
+               ,root.level_1_full_code  
+               ,root.level_1_name       
+               ,root.level_2_full_code  
+               ,root.level_2_name       
+               ,root.level_3_full_code  
+               ,root.level_3_name       
+               ,root.level_4_full_code  
+               ,root.level_4_name       
+               ,root.level_6_full_code  
+               ,root.nks_baru           
+               ,root.nu_sampel         
+               ,root.bersedia_value
+               ,root.bersedia_label
+               ,root.r110              
+               ,root.responden_terpilih
+               
+               
+               ,IIF((anomali_35.anomali_arr IS NULL AND art.r407 < 17 AND (root.r1104a_value = 1 OR root.r1104b_value = 1 )),1,0) AS anomali_35
+               ,IIF((anomali_36.anomali_arr IS NULL 
+                    AND root.r1104a_value = 1  AND root.r1106ai_value = 5 AND root.r1106aii_value = 5 AND root.r1106aiii_value = 5
+                    AND root.r1106aiv_value = 5 AND root.r1106av_value = 5 AND root.r1106avi_value = 5),1,0) AS anomali_36
+               ,IIF((anomali_37.anomali_arr IS NULL 
+                    AND root.r1104b_value = 1  AND root.r1106bi_value = 5 AND root.r1106bii_value = 5 AND root.r1106biii_value = 5
+                    AND root.r1106biv_value = 5 AND root.r1106bv_value = 5 AND root.r1106bvi_value = 5),1,0) AS anomali_37
+               ,IIF((anomali_38.anomali_arr IS NULL 
+                    AND (root.r1104a_value = 1 OR root.r1104b_value = 1 ) AND root.r1107a_value = 5 AND root.r1107b_value = 5 
+                    AND root.r1107c_value = 5 AND root.r1107d_value = 5 AND root.r1107e_value = 5 ),1,0) AS anomali_38
+            
+               ,usr.PPL
+               ,usr.PML        
+            
+               ,DATEADD(HOUR,7,base.date_modified) AS date
+               ,CONCAT('<a href = "https://fasih-sm.bps.go.id/survey-collection/assignment-detail/',
+                          root.assignment_id,
+                          '/4a8b0310-7424-419d-980a-72efe84408a1" target = "_blank">Link Assignment</a>') AS [Link]
+               
+               ,anomali_35.catatan
+               ,base.is_active
+               ,base.survey_period_id
+               
+      FROM tyo_93d2145f.root_table root
+            LEFT JOIN tyo_93d2145f.nested_art art
+                  ON root.assignment_id = art.assignment_id AND art.r401 = root.no_urut_terpilih
+                  
+            LEFT JOIN tyo_93d2145f.root_table_2 anomali_35
+                  ON root.assignment_id = anomali_35.assignment_id AND anomali_35.anomali_arr = '35'
+            LEFT JOIN tyo_93d2145f.root_table_2 anomali_36
+                  ON root.assignment_id = anomali_36.assignment_id AND anomali_36.anomali_arr = '36'
+            LEFT JOIN tyo_93d2145f.root_table_2 anomali_37
+                  ON root.assignment_id = anomali_37.assignment_id AND anomali_37.anomali_arr = '37'
+            LEFT JOIN tyo_93d2145f.root_table_2 anomali_38
+                  ON root.assignment_id = anomali_38.assignment_id AND anomali_38.anomali_arr = '38'
+
+            LEFT JOIN tyo_93d2145f.petugas usr
+                  ON root.assignment_id = usr.assignment_id                  
+
+            LEFT JOIN tyo_93d2145f.base_table_assignment base
+                  ON base.id = root.assignment_id
+  
+      WHERE (base.is_active = 1 AND root.bersedia_value != 3 AND (base.assignment_status_alias = 'APPROVED BY Pengawas' OR base.assignment_status_alias = 'COMPLETED BY Pengawas'))
+            AND anomali_35.anomali_arr IS NULL
+            AND anomali_36.anomali_arr IS NULL
+            AND anomali_37.anomali_arr IS NULL
+            AND anomali_38.anomali_arr IS NULL) rekap
+WHERE rekap.anomali_35 = 1 
+      OR rekap.anomali_36 = 1 
+      OR rekap.anomali_37 = 1 
+      OR rekap.anomali_38 = 1 
       
 /* Anomali 39-43 Blok LKM
   Link list anomali: http://s.bps.go.id/List-Anomali-SNLIK2026
@@ -990,8 +1082,9 @@ SELECT  rekap.assignment_id
                     AND (root.r1204a_value = 1 OR root.r1204b_value = 1 ) AND root.r1207a_value = 5 AND root.r1207b_value = 5 
                     AND root.r1207c_value = 5 ),1,0) AS anomali_43
                     
-               ,IIF(ppl.fullname = 'null' OR ppl.fullname IS NULL OR LTRIM(RTRIM(ppl.fullname)) = '', ppl.email, ppl.fullname)  AS [PPL]
-               ,IIF(pml.fullname = 'null' OR pml.fullname IS NULL OR LTRIM(RTRIM(pml.fullname)) = '', pml.email, pml.fullname)  AS [PML]
+               ,usr.PPL
+               ,usr.PML
+               
                ,DATEADD(HOUR,7,base.date_modified) AS date
                ,CONCAT('<a href = "https://fasih-sm.bps.go.id/survey-collection/assignment-detail/',
                           root.assignment_id,
@@ -1019,14 +1112,9 @@ SELECT  rekap.assignment_id
             LEFT JOIN tyo_93d2145f.pair_label_value_0 pair_d
                   ON root.assignment_id = pair_d.assignment_id AND pair_d.data_key = 'r414' AND pair_d.pair_value = 'D'
                   
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_ppl
-                  ON root.assignment_id = r_ppl.assignment_id AND r_ppl.current_survey_rolename = 'Pencacah'
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_pml
-                  ON root.assignment_id = r_pml.assignment_id AND r_pml.current_survey_rolename = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user pml
-                  ON pml.user_id = r_pml.current_user_id AND pml.role_description = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user ppl
-                  ON ppl.user_id = r_ppl.current_user_id AND ppl.role_description = 'Pencacah'
+            LEFT JOIN tyo_93d2145f.petugas usr
+                  ON root.assignment_id = usr.assignment_id
+                  
             LEFT JOIN tyo_93d2145f.base_table_assignment base
                   ON base.id = root.assignment_id
   
@@ -1120,8 +1208,9 @@ SELECT  rekap.assignment_id
                     AND (root.r1304a_value = 1 OR root.r1304b_value = 1 ) AND root.r1307a_value = 5 AND root.r1307b_value = 5 
                     AND root.r1307c_value = 5 ),1,0) AS anomali_47
                     
-               ,IIF(ppl.fullname = 'null' OR ppl.fullname IS NULL OR LTRIM(RTRIM(ppl.fullname)) = '', ppl.email, ppl.fullname)  AS [PPL]
-               ,IIF(pml.fullname = 'null' OR pml.fullname IS NULL OR LTRIM(RTRIM(pml.fullname)) = '', pml.email, pml.fullname)  AS [PML]
+               ,usr.PPL
+               ,usr.PML
+              
                ,DATEADD(HOUR,7,base.date_modified) AS date
                ,CONCAT('<a href = "https://fasih-sm.bps.go.id/survey-collection/assignment-detail/',
                           root.assignment_id,
@@ -1144,14 +1233,9 @@ SELECT  rekap.assignment_id
             LEFT JOIN tyo_93d2145f.root_table_2 anomali_47
                   ON root.assignment_id = anomali_47.assignment_id AND anomali_47.anomali_arr = '47'
                   
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_ppl
-                  ON root.assignment_id = r_ppl.assignment_id AND r_ppl.current_survey_rolename = 'Pencacah'
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_pml
-                  ON root.assignment_id = r_pml.assignment_id AND r_pml.current_survey_rolename = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user pml
-                  ON pml.user_id = r_pml.current_user_id AND pml.role_description = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user ppl
-                  ON ppl.user_id = r_ppl.current_user_id AND ppl.role_description = 'Pencacah'
+            LEFT JOIN tyo_93d2145f.petugas usr
+                  ON root.assignment_id = usr.assignment_id
+                  
             LEFT JOIN tyo_93d2145f.base_table_assignment base
                   ON base.id = root.assignment_id
   
@@ -1253,8 +1337,9 @@ SELECT  rekap.assignment_id
                     AND (root.r1404a_value = 1 OR root.r1404b_value = 1 OR root.r1404c_value = 1 OR root2.r1404d_value = 1 )
                     AND root.r1407a_value = 5 AND root.r1407b_value = 5 AND root.r1407c_value = 5 ),1,0) AS anomali_54
                     
-               ,IIF(ppl.fullname = 'null' OR ppl.fullname IS NULL OR LTRIM(RTRIM(ppl.fullname)) = '', ppl.email, ppl.fullname)  AS [PPL]
-               ,IIF(pml.fullname = 'null' OR pml.fullname IS NULL OR LTRIM(RTRIM(pml.fullname)) = '', pml.email, pml.fullname)  AS [PML]
+               ,usr.PPL
+               ,usr.PML
+               
                ,DATEADD(HOUR,7,base.date_modified) AS date
                ,CONCAT('<a href = "https://fasih-sm.bps.go.id/survey-collection/assignment-detail/',
                           root.assignment_id,
@@ -1289,14 +1374,9 @@ SELECT  rekap.assignment_id
             LEFT JOIN tyo_93d2145f.pair_label_value_0 pair_c
                   ON root.assignment_id = pair_c.assignment_id AND pair_c.data_key = 'r414' AND pair_c.pair_value = 'C'      
                   
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_ppl
-                  ON root.assignment_id = r_ppl.assignment_id AND r_ppl.current_survey_rolename = 'Pencacah'
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_pml
-                  ON root.assignment_id = r_pml.assignment_id AND r_pml.current_survey_rolename = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user pml
-                  ON pml.user_id = r_pml.current_user_id AND pml.role_description = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user ppl
-                  ON ppl.user_id = r_ppl.current_user_id AND ppl.role_description = 'Pencacah'
+            LEFT JOIN tyo_93d2145f.petugas usr
+                  ON root.assignment_id = usr.assignment_id
+                  
             LEFT JOIN tyo_93d2145f.base_table_assignment base
                   ON base.id = root.assignment_id
   
@@ -1387,8 +1467,9 @@ SELECT  rekap.assignment_id
                     AND root.r1504_value = 1 AND root.r1507a_value = 5 AND root.r1507b_value = 5 AND root.r1507c_value = 5 
                     AND root.r1507d_value = 5 AND root.r1507e_value = 5  ),1,0) AS anomali_56
                     
-               ,IIF(ppl.fullname = 'null' OR ppl.fullname IS NULL OR LTRIM(RTRIM(ppl.fullname)) = '', ppl.email, ppl.fullname)  AS [PPL]
-               ,IIF(pml.fullname = 'null' OR pml.fullname IS NULL OR LTRIM(RTRIM(pml.fullname)) = '', pml.email, pml.fullname)  AS [PML]
+               ,usr.PPL
+               ,usr.PML
+               
                ,DATEADD(HOUR,7,base.date_modified) AS date
                ,CONCAT('<a href = "https://fasih-sm.bps.go.id/survey-collection/assignment-detail/',
                           root.assignment_id,
@@ -1405,14 +1486,9 @@ SELECT  rekap.assignment_id
             LEFT JOIN tyo_93d2145f.root_table_2 anomali_56
                   ON root.assignment_id = anomali_56.assignment_id AND anomali_56.anomali_arr = '56'
                   
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_ppl
-                  ON root.assignment_id = r_ppl.assignment_id AND r_ppl.current_survey_rolename = 'Pencacah'
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_pml
-                  ON root.assignment_id = r_pml.assignment_id AND r_pml.current_survey_rolename = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user pml
-                  ON pml.user_id = r_pml.current_user_id AND pml.role_description = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user ppl
-                  ON ppl.user_id = r_ppl.current_user_id AND ppl.role_description = 'Pencacah'
+            LEFT JOIN tyo_93d2145f.petugas usr
+                  ON root.assignment_id = usr.assignment_id
+                  
             LEFT JOIN tyo_93d2145f.base_table_assignment base
                   ON base.id = root.assignment_id
   
@@ -1505,8 +1581,9 @@ SELECT  rekap.assignment_id
                     AND root2.r1601bi_value = 5 AND root2.r1601bii_value = 5 AND root2.r1601biii_value = 5 AND root2.r1601biv_value = 5 
                     AND root2.r1601bv_value = 5 AND root2.r1601bvi_value = 5 AND root2.r1601bvii_value = 5 AND root2.r1601bviii_value = 5),1,0) AS anomali_58
                     
-               ,IIF(ppl.fullname = 'null' OR ppl.fullname IS NULL OR LTRIM(RTRIM(ppl.fullname)) = '', ppl.email, ppl.fullname)  AS [PPL]
-               ,IIF(pml.fullname = 'null' OR pml.fullname IS NULL OR LTRIM(RTRIM(pml.fullname)) = '', pml.email, pml.fullname)  AS [PML]
+               ,usr.PPL
+               ,usr.PML
+               
                ,DATEADD(HOUR,7,base.date_modified) AS date
                ,CONCAT('<a href = "https://fasih-sm.bps.go.id/survey-collection/assignment-detail/',
                           root.assignment_id,
@@ -1526,18 +1603,13 @@ SELECT  rekap.assignment_id
             LEFT JOIN tyo_93d2145f.root_table_2 anomali_58
                   ON root.assignment_id = anomali_58.assignment_id AND anomali_58.anomali_arr = '58'
                   
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_ppl
-                  ON root.assignment_id = r_ppl.assignment_id AND r_ppl.current_survey_rolename = 'Pencacah'
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_pml
-                  ON root.assignment_id = r_pml.assignment_id AND r_pml.current_survey_rolename = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user pml
-                  ON pml.user_id = r_pml.current_user_id AND pml.role_description = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user ppl
-                  ON ppl.user_id = r_ppl.current_user_id AND ppl.role_description = 'Pencacah'
+            LEFT JOIN tyo_93d2145f.petugas usr
+                  ON root.assignment_id = usr.assignment_id
+                  
             LEFT JOIN tyo_93d2145f.base_table_assignment base
                   ON base.id = root.assignment_id
   
-      WHERE (base.is_active = 1 AND root.bersedia_value != 3)
+      WHERE (base.is_active = 1 AND root.bersedia_value != 3 AND (base.assignment_status_alias = 'APPROVED BY Pengawas' OR base.assignment_status_alias = 'COMPLETED BY Pengawas'))
             AND anomali_57.anomali_arr IS NULL
             AND anomali_58.anomali_arr IS NULL) rekap
 WHERE rekap.anomali_57 = 1 
@@ -1619,8 +1691,9 @@ SELECT  rekap.assignment_id
                ,IIF((anomali_61.anomali_arr IS NULL 
                     AND art.r408_value > 5 AND root2.r1702_value != 2 ),1,0) AS anomali_61
                     
-               ,IIF(ppl.fullname = 'null' OR ppl.fullname IS NULL OR LTRIM(RTRIM(ppl.fullname)) = '', ppl.email, ppl.fullname)  AS [PPL]
-               ,IIF(pml.fullname = 'null' OR pml.fullname IS NULL OR LTRIM(RTRIM(pml.fullname)) = '', pml.email, pml.fullname)  AS [PML]
+               ,usr.PPL
+               ,usr.PML
+              
                ,DATEADD(HOUR,7,base.date_modified) AS date
                ,CONCAT('<a href = "https://fasih-sm.bps.go.id/survey-collection/assignment-detail/',
                           root.assignment_id,
@@ -1644,18 +1717,13 @@ SELECT  rekap.assignment_id
             LEFT JOIN tyo_93d2145f.root_table_2 anomali_61
                   ON root.assignment_id = anomali_61.assignment_id AND anomali_61.anomali_arr = '61'
                   
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_ppl
-                  ON root.assignment_id = r_ppl.assignment_id AND r_ppl.current_survey_rolename = 'Pencacah'
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_pml
-                  ON root.assignment_id = r_pml.assignment_id AND r_pml.current_survey_rolename = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user pml
-                  ON pml.user_id = r_pml.current_user_id AND pml.role_description = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user ppl
-                  ON ppl.user_id = r_ppl.current_user_id AND ppl.role_description = 'Pencacah'
+            LEFT JOIN tyo_93d2145f.petugas usr
+                  ON root.assignment_id = usr.assignment_id
+                  
             LEFT JOIN tyo_93d2145f.base_table_assignment base
                   ON base.id = root.assignment_id
   
-      WHERE (base.is_active = 1 AND root.bersedia_value != 3)
+      WHERE (base.is_active = 1 AND root.bersedia_value != 3 AND (base.assignment_status_alias = 'APPROVED BY Pengawas' OR base.assignment_status_alias = 'COMPLETED BY Pengawas'))
             AND anomali_59.anomali_arr IS NULL
             AND anomali_60.anomali_arr IS NULL
             AND anomali_61.anomali_arr IS NULL) rekap
@@ -1750,8 +1818,9 @@ SELECT  rekap.assignment_id
                     OR root.r1305a_value = 1 OR root.r1305b_value = 1 OR root.r1405a_value = 1 OR root.r1405b_value = 1
                     OR root2.r1405d_value = 1 OR root.r1505_value = 1 )),1,0) AS anomali_64
                     
-               ,IIF(ppl.fullname = 'null' OR ppl.fullname IS NULL OR LTRIM(RTRIM(ppl.fullname)) = '', ppl.email, ppl.fullname)  AS [PPL]
-               ,IIF(pml.fullname = 'null' OR pml.fullname IS NULL OR LTRIM(RTRIM(pml.fullname)) = '', pml.email, pml.fullname)  AS [PML]
+               ,usr.PPL
+               ,usr.PML
+               
                ,DATEADD(HOUR,7,base.date_modified) AS date
                ,CONCAT('<a href = "https://fasih-sm.bps.go.id/survey-collection/assignment-detail/',
                           root.assignment_id,
@@ -1773,18 +1842,13 @@ SELECT  rekap.assignment_id
             LEFT JOIN tyo_93d2145f.root_table_2 anomali_64
                   ON root.assignment_id = anomali_64.assignment_id AND anomali_64.anomali_arr = '64'
                   
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_ppl
-                  ON root.assignment_id = r_ppl.assignment_id AND r_ppl.current_survey_rolename = 'Pencacah'
-            LEFT JOIN tyo_93d2145f.base_table_assignment_responsibility r_pml
-                  ON root.assignment_id = r_pml.assignment_id AND r_pml.current_survey_rolename = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user pml
-                  ON pml.user_id = r_pml.current_user_id AND pml.role_description = 'Pengawas'
-            LEFT JOIN tyo_93d2145f.base_table_user ppl
-                  ON ppl.user_id = r_ppl.current_user_id AND ppl.role_description = 'Pencacah'
+            LEFT JOIN tyo_93d2145f.petugas usr
+                  ON root.assignment_id = usr.assignment_id
+                  
             LEFT JOIN tyo_93d2145f.base_table_assignment base
                   ON base.id = root.assignment_id
   
-      WHERE (base.is_active = 1 AND root.bersedia_value != 3)
+      WHERE (base.is_active = 1 AND root.bersedia_value != 3 AND (base.assignment_status_alias = 'APPROVED BY Pengawas' OR base.assignment_status_alias = 'COMPLETED BY Pengawas'))
             AND anomali_62.anomali_arr IS NULL
             AND anomali_63.anomali_arr IS NULL
             AND anomali_64.anomali_arr IS NULL) rekap
