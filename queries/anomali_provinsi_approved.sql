@@ -1,5 +1,6 @@
-/* Anomali SNLIK Prov Lampung (Formatted)
-   Query ini menggabungkan logika pengecekan Prov 1-4 menjadi satu tabel datar.
+/* Anomali SNLIK Prov Lampung - APPROVED VERSION
+   Query ini menggabungkan logika pengecekan Prov 1-4.
+   Filter: APPROVED BY Pengawas OR COMPLETED BY Pengawas
 */
 
 SELECT
@@ -46,7 +47,7 @@ FROM (
                 AND root.r1504_value = 5
             ) THEN 1 ELSE 0 END AS PROV_02,
 
-            -- Prov 03: (R504a=1 ATAU R504b=1) DAN R1504=5 (Logika sama dengan Prov 02 di source)
+            -- Prov 03: (R504a=1 ATAU R504b=1) DAN R1504=5 (Logika sama dengan Prov 02)
             CASE WHEN (
                 (root.r504a_value = 1 OR root.r504b_value = 1) 
                 AND root.r1504_value = 5
@@ -64,7 +65,11 @@ FROM (
 
         FROM tyo_93d2145f.root_table root
         
-        -- Join ke ART (Opsional, jika butuh data individu, diaktifkan di sini)
+        -- Join ke Root Table 2 (Untuk Catatan)
+        LEFT JOIN tyo_93d2145f.root_table_2 root2 
+            ON root.assignment_id = root2.assignment_id
+
+        -- Join ke ART (Untuk data individu Responden Terpilih)
         LEFT JOIN tyo_93d2145f.nested_art art 
             ON root.assignment_id = art.assignment_id AND art.r401 = root.no_urut_terpilih
         
@@ -75,7 +80,7 @@ FROM (
         -- Join Status Assignment
         LEFT JOIN tyo_93d2145f.base_table_assignment base ON base.id = root.assignment_id
 
-        -- FILTER DATA
+        -- FILTER DATA (APPROVED ONLY)
         WHERE base.is_active = 1 
           AND root.bersedia_value != 3 
           AND (base.assignment_status_alias = 'APPROVED BY Pengawas' OR base.assignment_status_alias = 'COMPLETED BY Pengawas')
