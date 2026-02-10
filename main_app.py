@@ -155,70 +155,76 @@ st.divider()
 st.subheader("Langkah 2: Generate Query")
 st.markdown("Pilih jenis query yang ingin dihasilkan. Sistem akan memecah query menjadi beberapa bagian.")
 
-col_approved, col_non_approved, col_prov_approved, col_prov_non_approved = st.columns(4)
+# --- BARIS 1: ANOMALI PUSAT ---
+st.caption("📂 Anomali Pusat")
+row1_col1, row1_col2 = st.columns(2)
 
-# Tombol 1: Approved Only
-with col_approved:
-    if st.button('✅ Generate SQL (Approved)', use_container_width=True, type="primary"):
+# [Baris 1, Kolom 1] - Pusat Approved
+with row1_col1:
+    if st.button('✅ Pusat (Approved)', use_container_width=True, type="primary", key="btn_pusat_app"):
         if total_art_input:
             queries = generate_sql_queries(int(total_art_input), SQL_APPROVED_PATH)
             if queries:
-                st.success(f"Berhasil: {len(queries)} Query (Approved)")
-                st.info("Status: APPROVED BY Pengawas / COMPLETED BY Pengawas")
+                st.success(f"Berhasil: {len(queries)} Query (Pusat Approved)")
+                st.info("Status: APPROVED BY Pengawas")
                 with st.container(height=300):
                     for i, query in enumerate(queries, 1):
-                        with st.expander(f"📄 Query Approved Bagian {i}"):
+                        with st.expander(f"📄 Query Bagian {i}"):
                             st.code(query, language='sql')
             else:
                 st.error(f"Gagal. Cek file: {SQL_APPROVED_PATH}")
         else:
             st.warning("Masukkan jumlah ART dulu.")
 
-# Tombol 2: Non-Approved / All Status
-with col_non_approved:
-    if st.button('⚠️ Generate SQL (Non-Approved)', use_container_width=True):
+# [Baris 1, Kolom 2] - Pusat Non-Approved
+with row1_col2:
+    if st.button('⚠️ Pusat (Non-Approved)', use_container_width=True, key="btn_pusat_non"):
         if total_art_input:
             queries = generate_sql_queries(int(total_art_input), SQL_NON_APPROVED_PATH)
             if queries:
-                st.success(f"Berhasil: {len(queries)} Query (Non-Approved)")
-                st.info("Status: SEMUA (Active) termasuk Submitted/Rejected")
+                st.success(f"Berhasil: {len(queries)} Query (Pusat Non-App)")
+                st.info("Status: SEMUA STATUS (Active)")
                 with st.container(height=300):
                     for i, query in enumerate(queries, 1):
-                        with st.expander(f"📄 Query Non-Approve Bagian {i}"):
+                        with st.expander(f"📄 Query Bagian {i}"):
                             st.code(query, language='sql')
             else:
                 st.error(f"Gagal. Cek file: {SQL_NON_APPROVED_PATH}")
         else:
             st.warning("Masukkan jumlah ART dulu.")
 
-# Tombol 3: Provinsi Approved Only
-with col_prov_approved:
-    if st.button('✅ Generate SQL Provinsi (Approved)', use_container_width=True, type="primary"):
+# --- BARIS 2: ANOMALI PROVINSI ---
+st.caption("📂 Anomali Provinsi")
+row2_col1, row2_col2 = st.columns(2)
+
+# [Baris 2, Kolom 1] - Provinsi Approved
+with row2_col1:
+    if st.button('✅ Provinsi (Approved)', use_container_width=True, type="primary", key="btn_prov_app"):
         if total_art_input:
             queries = generate_sql_queries(int(total_art_input), SQL_PROVINSI_APP)
             if queries:
-                st.success(f"Berhasil: {len(queries)} Query (Approved)")
-                st.info("Status: APPROVED BY Pengawas / COMPLETED BY Pengawas")
+                st.success(f"Berhasil: {len(queries)} Query (Prov Approved)")
+                st.info("Status: APPROVED BY Pengawas")
                 with st.container(height=300):
                     for i, query in enumerate(queries, 1):
-                        with st.expander(f"📄 Query Approved Bagian {i}"):
+                        with st.expander(f"📄 Query Bagian {i}"):
                             st.code(query, language='sql')
             else:
                 st.error(f"Gagal. Cek file: {SQL_PROVINSI_APP}")
         else:
             st.warning("Masukkan jumlah ART dulu.")
 
-# Tombol 4: Provinsi Non-Approved / All Status
-with col_prov_non_approved:
-    if st.button('⚠️ Generate SQL Provinsi (Non-Approved)', use_container_width=True):
+# [Baris 2, Kolom 2] - Provinsi Non-Approved
+with row2_col2:
+    if st.button('⚠️ Provinsi (Non-Approved)', use_container_width=True, key="btn_prov_non"):
         if total_art_input:
             queries = generate_sql_queries(int(total_art_input), SQL_PROVINSI_NON_APP)
             if queries:
-                st.success(f"Berhasil: {len(queries)} Query (Non-Approved)")
-                st.info("Status: SEMUA (Active) termasuk Submitted/Rejected")
+                st.success(f"Berhasil: {len(queries)} Query (Prov Non-App)")
+                st.info("Status: SEMUA STATUS (Active)")
                 with st.container(height=300):
                     for i, query in enumerate(queries, 1):
-                        with st.expander(f"📄 Query Non-Approve Bagian {i}"):
+                        with st.expander(f"📄 Query Bagian {i}"):
                             st.code(query, language='sql')
             else:
                 st.error(f"Gagal. Cek file: {SQL_PROVINSI_NON_APP}")
