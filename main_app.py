@@ -155,7 +155,7 @@ st.divider()
 st.subheader("Langkah 2: Generate Query")
 st.markdown("Pilih jenis query yang ingin dihasilkan. Sistem akan memecah query menjadi beberapa bagian.")
 
-col_approved, col_non_approved = st.columns(2)
+col_approved, col_non_approved, col_prov_approved, col_prov_non_approved = st.columns(4)
 
 # Tombol 1: Approved Only
 with col_approved:
@@ -192,7 +192,7 @@ with col_non_approved:
             st.warning("Masukkan jumlah ART dulu.")
 
 # Tombol 3: Provinsi Approved Only
-with col_approved:
+with col_prov_approved:
     if st.button('✅ Generate SQL Provinsi (Approved)', use_container_width=True, type="primary"):
         if total_art_input:
             queries = generate_sql_queries(int(total_art_input), SQL_PROVINSI_APP)
@@ -209,7 +209,7 @@ with col_approved:
             st.warning("Masukkan jumlah ART dulu.")
 
 # Tombol 4: Provinsi Non-Approved / All Status
-with col_non_approved:
+with col_prov_non_approved:
     if st.button('⚠️ Generate SQL Provinsi (Non-Approved)', use_container_width=True):
         if total_art_input:
             queries = generate_sql_queries(int(total_art_input), SQL_PROVINSI_NON_APP)
