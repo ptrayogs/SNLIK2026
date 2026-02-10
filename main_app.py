@@ -8,6 +8,8 @@ import datetime
 # Pastikan kedua file ini ada di folder queries/
 SQL_APPROVED_PATH = "queries/anomali_pusat.sql" 
 SQL_NON_APPROVED_PATH = "queries/anomali_pusat_non_approve.sql"
+SQL_PROVINSI_APP = "queries/anomali_provinsi.sql"
+SQL_PROVINSI_NON_APP = "queries/anomali_provinsi_non_approve.sql"
 DESKRIPSI_PATH = "Deskripsi.xlsx"
 
 # --------------------------------------------------------------------------
