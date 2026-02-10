@@ -191,6 +191,40 @@ with col_non_approved:
         else:
             st.warning("Masukkan jumlah ART dulu.")
 
+# Tombol 3: Provinsi Approved Only
+with col_approved:
+    if st.button('✅ Generate SQL Provinsi (Approved)', use_container_width=True, type="primary"):
+        if total_art_input:
+            queries = generate_sql_queries(int(total_art_input), SQL_PROVINSI_APP)
+            if queries:
+                st.success(f"Berhasil: {len(queries)} Query (Approved)")
+                st.info("Status: APPROVED BY Pengawas / COMPLETED BY Pengawas")
+                with st.container(height=300):
+                    for i, query in enumerate(queries, 1):
+                        with st.expander(f"📄 Query Approved Bagian {i}"):
+                            st.code(query, language='sql')
+            else:
+                st.error(f"Gagal. Cek file: {SQL_PROVINSI_APP}")
+        else:
+            st.warning("Masukkan jumlah ART dulu.")
+
+# Tombol 4: Provinsi Non-Approved / All Status
+with col_non_approved:
+    if st.button('⚠️ Generate SQL Provinsi (Non-Approved)', use_container_width=True):
+        if total_art_input:
+            queries = generate_sql_queries(int(total_art_input), SQL_PROVINSI_NON_APP)
+            if queries:
+                st.success(f"Berhasil: {len(queries)} Query (Non-Approved)")
+                st.info("Status: SEMUA (Active) termasuk Submitted/Rejected")
+                with st.container(height=300):
+                    for i, query in enumerate(queries, 1):
+                        with st.expander(f"📄 Query Non-Approve Bagian {i}"):
+                            st.code(query, language='sql')
+            else:
+                st.error(f"Gagal. Cek file: {SQL_PROVINSI_NON_APP}")
+        else:
+            st.warning("Masukkan jumlah ART dulu.")
+
 st.divider()
 
 # --- LANGKAH 3: PROSES CSV ---
