@@ -56,7 +56,7 @@ FROM (
             -- Prov 04: (R504a=5 ATAU R504b=5) DAN R703=1
             CASE WHEN (
                 (root.r504a_value = 5 OR root.r504b_value = 5) 
-                AND root.r703_value = 1
+                AND root.r704_value = 1
             ) THEN 1 ELSE 0 END AS PROV_04,
 
             -- EXTRA
