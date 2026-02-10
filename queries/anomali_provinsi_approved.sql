@@ -59,7 +59,7 @@ FROM (
             ) THEN 1 ELSE 0 END AS PROV_04,
 
             -- EXTRA
-            root.catatan AS CATATAN,
+            root2.catatan AS CATATAN,
             CONCAT('<a href="https://fasih-sm.bps.go.id/survey-collection/assignment-detail/', root.assignment_id, '/4a8b0310-7424-419d-980a-72efe84408a1" target="_blank">Link Assignment</a>') AS Link
 
         FROM tyo_93d2145f.root_table root
