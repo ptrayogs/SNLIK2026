@@ -40,7 +40,7 @@ FROM (
             CASE WHEN (pair_a.pair_value = 'A' AND root.r501a_value = 5 AND root.r501b_value = 5) THEN 1 ELSE 0 END AS A9,
             CASE WHEN (root.r501a_value = 5 AND root.r504a_value = 1) THEN 1 ELSE 0 END AS A10,
             CASE WHEN (root.r501b_value = 5 AND root.r504b_value = 1) THEN 1 ELSE 0 END AS A11,
-            CASE WHEN ((root.r412_value IN ('02','03','05','06')) AND (root.r505a_value = 5 OR root.r505a_value IS NULL) AND (root.r505b_value = 5 OR root.r505b_value IS NULL)) THEN 1 ELSE 0 END AS A12,
+            CASE WHEN ((root.r412_value IN ('02','03','04','06')) AND (root.r505a_value = 5 OR root.r505a_value IS NULL) AND (root.r505b_value = 5 OR root.r505b_value IS NULL)) THEN 1 ELSE 0 END AS A12,
             CASE WHEN (root.r504a_value = 1 AND root.r506ai_value = 5 AND root.r506aii_value = 5 AND root.r506aiii_value = 5 AND root.r506aiv_value = 5 AND root.r506av_value = 5 AND root.r506avi_value = 5) THEN 1 ELSE 0 END AS A13,
             CASE WHEN (root.r504b_value = 1 AND root.r506bi_value = 5 AND root.r506bii_value = 5 AND root.r506biii_value = 5 AND root.r506biv_value = 5 AND root.r506bv_value = 5 AND root.r506bvi_value = 5) THEN 1 ELSE 0 END AS A14,
             CASE WHEN ((root.r503b_value = 1 AND root.r504b_value = 1) AND root.r507a_value = 5 AND root.r507b_value = 5 AND root.r507c_value = 5 AND root.r507d_value = 5 AND root.r507e_value = 5) THEN 1 ELSE 0 END AS A15,
